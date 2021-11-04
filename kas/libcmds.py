@@ -41,6 +41,7 @@ class Macro:
     """
         Contains commands and provides method to run them.
     """
+
     def __init__(self, use_common_setup=True, use_common_cleanup=True):
         if use_common_setup:
             repo_loop = Loop('repo_setup_loop')
@@ -115,6 +116,7 @@ class Loop(Command):
     """
         A class that defines a set of commands as a loop.
     """
+
     def __init__(self, name):
         self.commands = []
         self.name = name
@@ -159,10 +161,18 @@ class SetupHome(Command):
         return 'setup_home'
 
     def execute(self, ctx):
-        with open(self.tmpdirname + '/.wgetrc', 'w') as fds:
-            fds.write('\n')
-        with open(self.tmpdirname + '/.netrc', 'w') as fds:
-            fds.write('\n')
+        if os.environ.get('KAS_WGETRC_FILE', False):
+            shutil.copy(os.environ['KAS_WGETRC_FILE'],
+                        self.tmpdirname + '/.wgetrc')
+        else:
+            with open(self.tmpdirname + '/.wgetrc', 'w') as fds:
+                fds.write('\n')
+        if os.environ.get('KAS_NETRC_FILE', False):
+            shutil.copy(os.environ['KAS_NETRC_FILE'],
+                        self.tmpdirname + '/.netrc')
+        else:
+            with open(self.tmpdirname + '/.netrc', 'w') as fds:
+                fds.write('\n')
         with open(self.tmpdirname + '/.gitconfig', 'w') as fds:
             fds.write('[User]\n'
                       '\temail = kas@example.com\n'

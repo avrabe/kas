@@ -83,6 +83,9 @@ Environment variables
 | |git_cred|               | Allows to set the git credential helper in the   |
 |                          | `.gitconfig` of the kas user.                    |
 +--------------------------+--------------------------------------------------+
+| ``KAS_WGETRC_FILE``      | Allows to set the startup files for wget         |
+| ``KAS_NETRC_FILE``       | `.netrc` and/or `.wgetrc`.                       |
++--------------------------+--------------------------------------------------+
 
 .. |aws_cred| replace:: ``AWS_SHARED_CREDENTIALS_FILE``
 .. |git_cred| replace:: ``GIT_CREDENTIAL_HELPER``
